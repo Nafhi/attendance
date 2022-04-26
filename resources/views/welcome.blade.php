@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Codepolitan Attendance</title>
+  <title>Presensi REKA</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -20,7 +20,7 @@
 <!-- Automatic element centering -->
 <div class="lockscreen-wrapper">
   <div class="lockscreen-logo">
-    <a href="#"><b>Attendance</b>Live</a>
+    <a href="#"><b>PRESENSI ONLINE</b><br>PT REKAINDO GLOBAL JASA</a>
   </div>
 
   <!-- START LOCK SCREEN ITEM -->
