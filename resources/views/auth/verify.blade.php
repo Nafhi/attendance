@@ -8,10 +8,10 @@
                 <div class="card-header">{{ __('') }}</div>
 
                 <div class="card-body">
-                    
 
-                    
-                    
+
+
+
                 </div>
             </div>
         </div>
@@ -24,7 +24,7 @@
 @section('content')
 <div class="login-box">
     <div class="login-logo">
-        <a href="#"><b>Attendance</b>Live</a>
+        <img src="{{asset('gambar/reka.png')}}" height="50" width="140">
     </div>
     <!-- /.login-logo -->
     <div class="card">

@@ -3,11 +3,11 @@
 @section('content')
     <div class="login-box">
         <div class="login-logo">
-            <a href="#"><b>Attendance</b>Live</a>
+            <img src="{{asset('gambar/reka.png')}}" height="50" width="140">
         </div>
         <!-- /.login-logo -->
         <div class="card">
-            <div class="card-body login-card-body">    
+            <div class="card-body login-card-body">
                 <p class="login-box-msg">Please confirm your password before continuing.</p>
 
                 <form method="POST" action="{{ route('password.confirm') }}">
@@ -33,7 +33,7 @@
                     </div>
                     <!-- /.col -->
                 </form>
-    
+
                 @if (Route::has('password.request'))
                 <p class="mb-1">
                     <a href="{{ route('password.request') }}">Forgot Your Password?</a>
