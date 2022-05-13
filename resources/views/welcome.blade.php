@@ -35,7 +35,7 @@
     <a href="{{ url('login') }}">login</a>
   </div>
   <div class="lockscreen-footer text-center">
-    Copyright &copy; 2014-2019 <b><a href="http://adminlte.io" class="text-black">AdminLTE.io</a></b><br>
+    Copyright &copy; 2021-2022 <b><a href="https://ptrekaindo.co.id/" class="text-black">RekaPresensi</a></b><br>
     All rights reserved
   </div>
 </div>

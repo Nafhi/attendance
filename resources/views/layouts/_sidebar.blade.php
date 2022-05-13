@@ -1,13 +1,13 @@
 <div class="sidebar">
     <!-- Sidebar user panel (optional) -->
-    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+    <div class="user-panel d-flex">
         <div class="image">
-            <img src="https://avatars.dicebear.com/api/bottts/example.svg?options%5Bcolors%5D%5B%5D=cyan"
-                class="img-circle elevation-2" alt="User Image">
+            {{-- <img src="https://avatars.dicebear.com/api/bottts/example.svg?options%5Bcolors%5D%5B%5D=cyan"
+                class="img-circle elevation-2" alt="User Image"> --}}
         </div>
-        <div class="info">
+        {{-- <div class="info">
             <a href="#" class="d-block">{{ Auth::user()->name }}</a>
-        </div>
+        </div> --}}
     </div>
 
     <!-- Sidebar Menu -->
