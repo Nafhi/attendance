@@ -1,0 +1,8 @@
+.sidebar-light-primary .nav-sidebar > .nav-item > .nav-link.custom-active {
+    background-color: #2979FF;
+    color: white;
+}
+
+.navbar.custom-navbar {
+    background-color: #2979FF;
+}

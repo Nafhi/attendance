@@ -70,6 +70,15 @@
                                     <label class="form-check-label" for="inlineRadio2">No</label>
                                 </div>
                             </div>
+                            {{-- <div class="form-group">
+                                <label for="">Section</label>
+                                <br>
+                                <select name="test">
+                                    <option value="1">Information Technology</option>
+                                    <option value="2">Human Resources & GA</option>
+                                    <option value="3">Accounting</option>
+                                </select>
+                            </div> --}}
                             <div class="form-group">
                                 <label for="">Photo</label>
                                 <input type="file" name="image" class="form-control-file">

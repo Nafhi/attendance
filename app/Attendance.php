@@ -9,6 +9,10 @@ class Attendance extends Model
 {
     protected $guarded = [];
 
+    protected $hidden = [
+        'laravel_through_key'
+    ];
+
     public function scopeCountAttendance($query, $status)
     {
         return $query->whereDate('created_at', Carbon::today())

@@ -61,7 +61,7 @@
             </form>
 
             <p class="mb-1">
-                <a href="{{ route('password.request') }}">I forgot my password</a>
+                <a href="https://api.whatsapp.com/send?phone=6282333889670">I forgot my password</a>
             </p>
         </div>
         <!-- /.login-card-body -->

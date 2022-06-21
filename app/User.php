@@ -42,4 +42,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Attendance::class);
     }
+
+    public function attrpt()
+    {
+        return $this->hasManyThrough(AttendanceDetail::class, Attendance::class);
+    }
 }

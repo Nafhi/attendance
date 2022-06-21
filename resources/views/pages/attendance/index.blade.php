@@ -13,14 +13,15 @@
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
                     <li class="breadcrumb-item active">Attendance</li>
                 </ol>
-            </div><!-- /.col -->
+            </div>
+            <!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
 </div>
 <!-- /.content-header -->
-
 <section class="content">
     <div class="container-fluid">
+        <a href="{{ route('print') }}" class="btn btn-sm btn-danger mb-2"><i class="fa fa-print"></i> Cetak PDF</a>
         <!-- Main row -->
         <div class="row">
             <!-- Left col -->
@@ -33,12 +34,13 @@
                 @endif
 
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header" >
                         <h3 class="card-title">
                             <i class="ion ion-clipboard mr-1"></i>
                             Attendance
                         </h3>
                     </div>
+
                     <!-- /.card-header -->
                     <div class="card-body">
 
@@ -50,6 +52,7 @@
                                     <th>Status</th>
                                     <th>Check In Time</th>
                                     <th>Check Out Time</th>
+                                    {{-- <th>Overtime</th> --}}
                                     <th></th>
                                 </tr>
                             </thead>

@@ -20,7 +20,7 @@
 <!-- Automatic element centering -->
 <div class="lockscreen-wrapper">
   <div class="lockscreen-logo">
-    <a href="#"><b>PRESENSI ONLINE</b><br>PT REKAINDO GLOBAL JASA</a>
+    <img src="{{asset('gambar/reka.png')}}" height="100" width="270">
   </div>
 
   <!-- START LOCK SCREEN ITEM -->

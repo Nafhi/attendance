@@ -45,4 +45,11 @@ class AttendanceController extends Controller
         $attendance = Attendance::with(['user', 'detail'])->findOrFail($id);
         return view('pages.attendance.show', compact('attendance'));
     }
+
+    public function cetak_pdf()
+    {
+        $attendance = Attendance::all();
+        $pdf = PDF::loadview('page.attendance.pdf' , ['cetak_pdf' => $attendance]);
+        return $pdf->download('Laporan_Data_Barang');
+    }
 }

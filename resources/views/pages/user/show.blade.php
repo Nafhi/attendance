@@ -50,6 +50,10 @@
                                     <th>Is Admin?</th>
                                     <td>{{ $user->is_admin ? 'Yes' : 'No' }}</td>
                                 </tr>
+                                {{-- <tr>
+                                    <th>Section</th>
+                                    <td>{{ $user->section  }}</td>
+                                </tr> --}}
                                 <tr>
                                     <th>Photo</th>
                                     <td><img width="350" src="{{ asset('/storage/profile/' . $user->photo) }}" alt=""></td>
