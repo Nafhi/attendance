@@ -40,24 +40,6 @@ jobs:
         uses: actions/checkout@v2.4.2
         with:
           fetch-depth: 2
-      - name: 🔨 Create .env
-        uses: ozaytsev86/create-env-file@v1
-        with:
-          ENV_APP_NAME: rekaapi
-          ENV_APP_ENV: production
-          ENV_APP_KEY: ''
-          ENV_APP_DEBUG: false
-          ENV_APP_URL: http://rekaabsensi.mojosemidinopark.com/
-          ENV_DB_CONNECTION: mysql
-          ENV_DB_HOST: 127.0.0.1
-          ENV_DB_PORT: 3306
-          ENV_DB_DATABASE: ${{ secrets.DB_NAME }}
-          ENV_DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          ENV_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          ENV_SESSION_DOMAIN: ${{ secrets.HOST }}
-          ENV_SANCTUM_STATEFUL_DOMAINS: ${{ secrets.HOST }}
-      - name: 🔨 Generate .env key
-        run: php artisan key:generate
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@4.1.0
         with:
