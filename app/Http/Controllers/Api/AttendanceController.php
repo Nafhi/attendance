@@ -22,6 +22,8 @@ class AttendanceController extends Controller
      */
     public function store(Request $request)
     {
+        return response()->json(['data'=>$request->photo->data]);
+
         $request->validate([
             'long' => ['required'],
             'lat' => ['required'],
