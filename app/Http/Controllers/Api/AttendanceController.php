@@ -22,7 +22,7 @@ class AttendanceController extends Controller
      */
     public function store(Request $request)
     {
-        return response()->json(['data'=>$request->photo->data]); //cek
+        // return response()->json(['data'=>$request->photo->data]); //cek
 
         $request->validate([
             'long' => ['required'],
