@@ -80,7 +80,7 @@
             ajax: '{{ url("attendance") }}',
             columns: [
                 {data: 'DT_RowIndex', name: 'id'},
-                {data: 'user.name', name: 'user.name'},
+                {data: 'name', name: 'users.name'},
                 {data: function(row) {
                     return row.status ? "Check Out" : "Check In"
                 }, name: 'status'},

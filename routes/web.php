@@ -26,3 +26,5 @@ Route::resource('/user', 'UserController');
 Route::resource('/attendance', 'AttendanceController')->only(['index', 'show']);
 Route::get('/print', 'PdfController@print')->name('print');
 Route::resource('/shift', 'ShiftController');
+
+Route::post('/getAttendanceDetail', 'AttendanceController@getAttendanceDetail')->name('getAttendanceDetail');
