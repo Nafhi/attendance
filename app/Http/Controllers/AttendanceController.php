@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Attendance;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
 
 class AttendanceController extends Controller
@@ -72,5 +73,23 @@ class AttendanceController extends Controller
     {
         $attendance = Attendance::with(['user', 'detail'])->findOrFail($request->id);
         return response()->json(['data' => $attendance], 200);
+    }
+
+    public function getAttendanceByMonth(Request $request, $date)
+    {
+        $year = Str::before($date, '-');
+        $month = Str::after($date, '-');
+        if ($request->ajax()) {
+            $data = Attendance::with('user')->whereMonth('created_at', $month)->whereYear('created_at', $year);
+
+            return DataTables::eloquent($data)
+                ->addColumn('action', function ($data) {
+                    $btn = "<button class='btn btn-sm btn-secondary' onclick='getDetail($data->id)'>Detail</button>";
+                    return $btn;
+                })
+                ->addIndexColumn()
+                ->rawColumns(['action'])
+                ->toJson();
+        }
     }
 }

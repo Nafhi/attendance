@@ -28,3 +28,4 @@ Route::get('/print', 'PdfController@print')->name('print');
 Route::resource('/shift', 'ShiftController');
 
 Route::post('/getAttendanceDetail', 'AttendanceController@getAttendanceDetail')->name('getAttendanceDetail');
+Route::get('/getAttendanceByMonth/{date}', 'AttendanceController@getAttendanceByMonth')->name('getAttendanceByMonth');
