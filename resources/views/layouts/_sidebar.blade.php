@@ -31,14 +31,14 @@
                     </p>
                 </a>
             </li>
-            {{-- <li class="nav-item">
+            <li class="nav-item">
                 <a href="{{ url('/shift') }}" class="nav-link {{ request()->routeIs('shift.*') ? 'custom-active' : '' }}">
                     <i class="nav-icon far fa-clock"></i>
                     <p>
                         Shift
                     </p>
                 </a>
-            </li> --}}
+            </li>
             <li class="nav-item">
                 <a href="{{ url('/user') }}" class="nav-link {{ request()->routeIs('user.*') ? 'custom-active' : '' }}">
                     <i class="nav-icon fas fa-user"></i>

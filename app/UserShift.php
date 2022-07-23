@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Shift extends Model
+class UserShift extends Model
 {
-    protected $table = 'shift';
+    protected $table = 'user_shifts';
 }

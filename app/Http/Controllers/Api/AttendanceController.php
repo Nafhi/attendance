@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Shift;
 use App\Traits\ImageStorage;
-use Carbon\Carbon;
+use App\UserShift;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -39,16 +42,61 @@ class AttendanceController extends Controller
             ->whereDate('created_at', Carbon::today())
             ->first();
 
-        // is presence type equal with 'in' ?
+        $user_shift = UserShift::leftJoin('shift', 'user_shifts.shift_id', '=', 'shift.id')
+            ->where('user_id', $request->user()->id)
+            ->first();
+
+        $checkin = Str::substr($user_shift->checkin, 0, 5);
+        $checkout = Str::substr($user_shift->checkout, 0, 5);
+        $overtime = Str::substr($user_shift->overtime, 0, 5);
+        $now = Carbon::now()->format('H:i');
+        // // is presence type equal with 'in' ?
         if ($attendanceType == 'in') {
-            // is $userPresenceToday not found?
-            if (! $userAttendanceToday) {
+            if (date('H:i', strtotime($checkin)) > $now) {
+                return response()->json(
+                    [
+                        'message' => "Checkin was open on $checkin"
+                    ],
+                    Response::HTTP_OK
+                );
+            }
+
+            if (date('H:i', strtotime($checkout)) < $now) {
                 $attendance = $request
                     ->user()
                     ->attendances()
                     ->create(
                         [
-                            'status' => false
+                            'status' => 'late checkin'
+                        ]
+                    );
+
+                $attendance->detail()->create(
+                    [
+                        'type' => 'in',
+                        'long' => $request->long,
+                        'lat' => $request->lat,
+                        'photo' => $this->uploadImage($photo, $request->user()->name, 'attendance'),
+                        'address' => $request->address
+                    ]
+                );
+
+                return response()->json(
+                    [
+                        'message' => "User Late, checkin must be do before $checkout"
+                    ],
+                    Response::HTTP_CREATED
+                );
+            }
+
+            // is $userPresenceToday not found?
+            if (!$userAttendanceToday) {
+                $attendance = $request
+                    ->user()
+                    ->attendances()
+                    ->create(
+                        [
+                            'status' => 'in'
                         ]
                     );
 
@@ -80,6 +128,34 @@ class AttendanceController extends Controller
         }
 
         if ($attendanceType == 'out') {
+            if (date('H:i', strtotime($checkout)) < $now) {
+                $attendance = $request
+                    ->user()
+                    ->attendances()
+                    ->create(
+                        [
+                            'status' => 'late checkout'
+                        ]
+                    );
+
+                $attendance->detail()->create(
+                    [
+                        'type' => 'out',
+                        'long' => $request->long,
+                        'lat' => $request->lat,
+                        'photo' => $this->uploadImage($photo, $request->user()->name, 'attendance'),
+                        'address' => $request->address
+                    ]
+                );
+
+                return response()->json(
+                    [
+                        'message' => "User Late, checkout must be do before $overtime"
+                    ],
+                    Response::HTTP_CREATED
+                );
+            }
+
             if ($userAttendanceToday) {
 
                 if ($userAttendanceToday->status) {
@@ -93,7 +169,7 @@ class AttendanceController extends Controller
 
                 $userAttendanceToday->update(
                     [
-                        'status' => true
+                        'status' => 'out'
                     ]
                 );
 

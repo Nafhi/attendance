@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Shift;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class ShiftController extends Controller
 {
@@ -11,9 +13,24 @@ class ShiftController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        // $data = Shift::select()->get();
+        if ($request->ajax()) {
+            $data = Shift::query();
+
+            return DataTables::eloquent($data)
+                ->addColumn('action', function ($data) {
+                    return view('layouts._action', [
+                        'model' => $data,
+                        'edit_url' => route('shift.edit', $data->id),
+                        'show_url' => '',
+                        'delete_url' => route('shift.destroy', $data->id),
+                    ]);
+                })
+                ->addIndexColumn()
+                ->rawColumns(['action'])
+                ->toJson();
+        }
 
         return view('pages.shift.shift');
     }
@@ -36,14 +53,22 @@ class ShiftController extends Controller
      */
     public function store(Request $request)
     {
-        $data = new Shift;
-        $data->nama = $request->nama;
-        $data->checkin = $request->checkin;
-        $data->checkout = $request->checkout;
-        $data->overtime = $request->overtime;
-        $data->save();
-        // dd($data); die;
-        return redirect()->route('shift.index');
+
+        if (date('H:i', strtotime($request->checkout)) == date('H:i', strtotime($request->checkin))) {
+            return redirect()->back()->with('error', 'Waktu Checkout tidak boleh sama waktu Checkin');
+        } else if (date('H:i', strtotime($request->checkout)) < date('H:i', strtotime($request->checkin))) {
+            return redirect()->back()->with('error', 'Waktu Checkout tidak boleh kurang dari waktu Checkin');
+        } else if (date('H:i', strtotime($request->checkout)) > date('H:i', strtotime($request->overtime))) {
+            return redirect()->back()->with('error', 'Waktu Overtime tidak boleh kurang dari waktu Checkout');
+        } else {
+            $data = new Shift;
+            $data->nama = $request->nama;
+            $data->checkin = $request->checkin;
+            $data->checkout = $request->checkout;
+            $data->overtime = $request->overtime;
+            $data->save();
+            return redirect()->route('shift.index');
+        }
     }
 
     /**
@@ -66,7 +91,6 @@ class ShiftController extends Controller
     public function edit($id)
     {
         $data = Shift::find($id);
-        // dd($data); die;
         return view('pages.shift.edit')->with(compact('data'));
     }
 
@@ -79,13 +103,21 @@ class ShiftController extends Controller
      */
     public function update(Request $request, $id)
     {
-          // dd($request);
-          $data = Shift::find($id);
-          // dd($data);
-          $data->nama =$request->nama;
-          $data->save();
-          // dd($data);
-          return redirect()->route('shift.index');
+        if (date('H:i', strtotime($request->checkout)) == date('H:i', strtotime($request->checkin))) {
+            return redirect()->back()->with('error', 'Waktu Checkout tidak boleh sama waktu Checkin');
+        } else if (date('H:i', strtotime($request->checkout)) < date('H:i', strtotime($request->checkin))) {
+            return redirect()->back()->with('error', 'Waktu Checkout tidak boleh kurang dari waktu Checkin');
+        } else if (date('H:i', strtotime($request->checkout)) > date('H:i', strtotime($request->overtime))) {
+            return redirect()->back()->with('error', 'Waktu Overtime tidak boleh kurang dari waktu Checkout');
+        } else {
+            $data = Shift::find($id);
+            $data->nama = $request->nama;
+            $data->checkin = $request->checkin;
+            $data->checkout = $request->checkout;
+            $data->overtime = $request->overtime;
+            $data->save();
+            return redirect()->route('shift.index');
+        }
     }
 
     /**
@@ -101,4 +133,3 @@ class ShiftController extends Controller
         return redirect()->route('shift.index');
     }
 }
-

@@ -3,7 +3,9 @@
     @if ($edit_url)
         <a href="{{ $edit_url }}" class="btn btn-sm btn-info text-white">Edit</a>
     @endif
+    @if($show_url)
     <a href="{{ $show_url }}" class="btn btn-sm btn-secondary">Show</a>
+    @endif
     @if ($delete_url)
     <button
     type="submit"

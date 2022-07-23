@@ -23,45 +23,53 @@
 <a href="{{ route('shift.create') }}" class="btn btn-sm btn-primary mb-2">Add</a>
 <div class="row">
     <div class="col-12">
-        <div class="card card-primary">
-            <div class="card-body p-0">
-                <table class="table">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="ion ion-clipboard mr-1"></i>
+                    Shift
+                </h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+
+                <table class="table" id="datatable">
                     <thead>
                         <tr>
-                            <th>Kelompok Shift</th>
-                            <th>Check-in</th>
-                            <th>Check-out</th>
+                            <th>ID</th>
+                            <th>Nama</th>
+                            <th>Check In</th>
+                            <th>Check Out</th>
                             <th>Overtime</th>
-                            <th>Opsi</th>
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>08:00</td>
-                                <td>17:00</td>
-                                <td>02.00</td>
-                                <td class="text-left py-0 align-middle">
-                                    <div class="btn-group btn-group-sm">
-                                        <a href="" class="btn btn-info"><i
-                                                class="fas fa-pencil-alt mr-1"></i></a>
-                                        <form action="" method="POST">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" class="btn btn-danger"><i
-                                                    class="fas fa-trash"></i></button>
-
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                    </tbody>
                 </table>
+
             </div>
-            <!-- /.card-body -->
         </div>
     </div>
     <!-- /.card -->
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    $(document).ready(function() {
+        $('#datatable').DataTable({
+            processing: true,
+            serverSide: true,
+            responsive: true,
+            ajax: '{{ url("shift") }}',
+            columns: [
+                {data: 'id', name: 'id'},
+                {data: 'nama', name: 'nama'},
+                {data: 'checkin', name: 'checkin'},
+                {data: 'checkout', name: 'checkout'},
+                {data: 'overtime', name: 'overtime'},
+                {data: 'action', name: 'action', orderable: false, searchable: false}
+            ]
+        });
+    });
+</script>
+@endpush

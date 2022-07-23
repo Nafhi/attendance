@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Shift;
 use App\Traits\ImageStorage;
 use App\User;
+use App\UserShift;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -29,7 +32,9 @@ class UserController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = User::query();
+            $data = User::leftJoin('user_shifts', 'user_shifts.user_id', '=', 'users.id')
+                ->leftJoin('shift', 'user_shifts.shift_id', '=', 'shift.id')
+                ->select('users.id as id', 'users.name as name', 'users.email as email', 'shift.nama as shift_nama');
 
             return DataTables::eloquent($data)
                 ->addColumn('action', function ($data) {
@@ -56,7 +61,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('pages.user.create');
+        $shifts = Shift::all();
+        return view('pages.user.create', compact('shifts'));
     }
 
     /**
@@ -75,7 +81,12 @@ class UserController extends Controller
 
         $request['password'] = Hash::make($request->password);
 
-        User::create($request->all());
+        $user = User::create($request->all());
+
+        $user_shift = new UserShift();
+        $user_shift->user_id = $user->id;
+        $user_shift->shift_id = $request->shift_id;
+        $user_shift->save();
 
         return redirect()->route('user.index');
     }
@@ -88,8 +99,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        $shifts = Shift::all();
         $user = User::findOrFail($id);
-        return view('pages.user.show', compact('user'));
+        return view('pages.user.show', compact('user', 'shifts'));
     }
 
     /**
@@ -100,8 +112,10 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $shifts = Shift::all();
+        $user_shift = UserShift::where('user_id', $id)->first();
         $user = User::findOrFail($id);
-        return view('pages.user.edit', compact('user'));
+        return view('pages.user.edit', compact('user', 'shifts', 'user_shift'));
     }
 
     /**
@@ -127,6 +141,19 @@ class UserController extends Controller
         }
 
         $user->update($request->all());
+
+        $user_shift = UserShift::where('user_id', $user->id)->first();
+
+        if ($user_shift == null) {
+            $user_shift = new UserShift();
+            $user_shift->user_id = $user->id;
+            $user_shift->shift_id = $request->shift_id;
+            $user_shift->save();
+        } else {
+            $user_shift->user_id = $id;
+            $user_shift->shift_id = $request->shift_id;
+            $user_shift->save();
+        }
 
         return redirect()->route('user.index');
     }

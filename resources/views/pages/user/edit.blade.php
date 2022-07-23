@@ -45,15 +45,18 @@
                     <!-- /.card-header -->
                     <div class="card-body">
 
-                        <form action="{{ route('user.update', $user->id) }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('user.update', $user->id) }}" method="post"
+                            enctype="multipart/form-data">
                             @csrf @method('PUT')
                             <div class="form-group">
                                 <label for="">Name</label>
-                                <input type="text" name="name" class="form-control" value="{{ old('name', $user->name) }}">
+                                <input type="text" name="name" class="form-control"
+                                    value="{{ old('name', $user->name) }}">
                             </div>
                             <div class="form-group">
                                 <label for="">e-Mail</label>
-                                <input type="email" name="email" class="form-control" value="{{ old('email', $user->email) }}">
+                                <input type="email" name="email" class="form-control"
+                                    value="{{ old('email', $user->email) }}">
                             </div>
                             <div class="form-group">
                                 <label for="">Password</label>
@@ -62,29 +65,36 @@
                             <div class="form-group">
                                 <label for="" style="display: block">Is Admin</label>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" name="is_admin" type="radio" id="inlineRadio1" value="1" {{ old('name', $user->is_admin) == 1 ? 'checked' : '' }}>
+                                    <input class="form-check-input" name="is_admin" type="radio" id="inlineRadio1"
+                                        value="1" {{ old('name', $user->is_admin) == 1 ? 'checked' : '' }}>
                                     <label class="form-check-label" for="inlineRadio1">Yes</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" name="is_admin" type="radio" id="inlineRadio2" value="0" {{ old('name', $user->is_admin) == 0 ? 'checked' : '' }}>
+                                    <input class="form-check-input" name="is_admin" type="radio" id="inlineRadio2"
+                                        value="0" {{ old('name', $user->is_admin) == 0 ? 'checked' : '' }}>
                                     <label class="form-check-label" for="inlineRadio2">No</label>
                                 </div>
                             </div>
-                            {{-- <div class="form-group">
-                                <label for="">Section</label>
-                                <br>
-                                <select name="test">
-                                    <option value="1">Information Technology</option>
-                                    <option value="2">Human Resources & GA</option>
-                                    <option value="3">Accounting</option>
-                                </select>
-                            </div> --}}
                             <div class="form-group">
                                 <label for="">Photo</label>
                                 <input type="file" name="image" class="form-control-file">
                                 @if ($user->photo)
-                                    <img src="{{ asset('/storage/profile/' . $user->photo) }}" alt="" height="100">
+                                <img src="{{ asset('/storage/profile/' . $user->photo) }}" alt="" height="100">
                                 @endif
+                            </div>
+                            <div class="form-group">
+                                <label for="">Shift</label>
+                                <br>
+                                <select class="form-control" name="shift_id">
+                                    @foreach ($shifts as $shift)
+                                    <option value="{{$shift->id}}" @if ($user_shift !=null) @if ($user_shift->shift_id
+                                        == $shift->id)
+                                        {{'selected'}}
+                                        @endif
+                                        @endif
+                                        >{{$shift->nama}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
@@ -99,4 +109,3 @@
     </div><!-- /.container-fluid -->
 </section>
 @endsection
-

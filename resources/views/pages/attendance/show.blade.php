@@ -193,7 +193,7 @@
                 $('.attendance-details').removeClass('d-none')
 
                 $('#attendance_name').text(data.data.user.name)
-                $('#attendance_status').text(data.data.status == 1 ? 'Check Out' : 'Check In')
+                $('#attendance_status').text(data.data.status == 'out' ? 'Check Out' : data.data.status == 'in' ? 'Check In' : data.data.status == 'late checkin' ? 'Late Checkin' : 'Late Checkout')
 
                 $('#attendance_in').text(new Date(data.data.created_at).toLocaleString())
                 $('#attendance_out').text(new Date(data.data.updated_at).toLocaleString())

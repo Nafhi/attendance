@@ -53,6 +53,7 @@
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>E-Mail</th>
+                                    <th>Shift</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -82,6 +83,7 @@
                 {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
                 {data: 'email', name: 'email'},
+                {data: 'shift_nama', name: 'shift.nama'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
         });
